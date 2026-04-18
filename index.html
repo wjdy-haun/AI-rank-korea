@@ -3,47 +3,156 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Rank Korea</title>
+<title>AI 도구 순위</title>
+<style>
+    /* 전체 화면 중앙 정렬 및 배경색 설정 */
+    body {
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background-color: #f8f9fa;
+    }
 
-<link rel="stylesheet" href="style.css">
+    /* 랭킹 박스 디자인 */
+    .ranking-container {
+        text-align: center;
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        width: 100%;
+        max-width: 400px;
+    }
+
+    /* 제목 스타일 */
+    h1 {
+        margin-top: 0;
+        font-size: 24px;
+        color: #212529;
+    }
+
+    /* 부제목 스타일 */
+    .subtitle {
+        color: #868e96;
+        margin-bottom: 30px;
+        font-size: 15px;
+    }
+
+    /* 각 AI 도구 항목 정렬 (가로 배치) */
+    .ai-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+        border-bottom: 1px solid #f1f3f5;
+    }
+
+    /* 마지막 항목은 밑줄 제거 */
+    .ai-item:last-child {
+        border-bottom: none;
+    }
+
+    /* AI 이름 (왼쪽 정렬) */
+    .ai-name {
+        font-weight: 600;
+        font-size: 16px;
+        color: #343a40;
+        flex: 1;
+        text-align: left;
+    }
+
+    /* 투표 버튼 디자인 */
+    .vote-btn {
+        background-color: #f1f3f5;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #495057;
+        transition: background-color 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .vote-btn:hover {
+        background-color: #e9ecef;
+    }
+
+    /* 투표 숫자 색상 강조 */
+    .vote-count {
+        font-weight: bold;
+        color: #fa5252;
+        min-width: 16px;
+    }
+
+    /* 바로가기 링크 디자인 */
+    .link-btn {
+        text-decoration: none;
+        color: #339af0;
+        font-size: 14px;
+        margin-left: 16px;
+        font-weight: 500;
+    }
+
+    .link-btn:hover {
+        text-decoration: underline;
+    }
+</style>
 </head>
-
 <body>
 
-<header>
-<h1>🏆 AI 도구 순위</h1>
-<p>투표로 정하는 AI 랭킹</p>
-</header>
+<div class="ranking-container">
+    <h1>🏆 AI 도구 순위</h1>
+    <p class="subtitle">투표로 정하는 AI 랭킹</p>
 
-<div id="list">
+    <div class="ai-list">
+        <div class="ai-item">
+            <span class="ai-name">ChatGPT</span>
+            <button class="vote-btn" onclick="addVote(this)">
+                👍 투표 <span class="vote-count">0</span>
+            </button>
+            <a href="#" class="link-btn">바로가기</a>
+        </div>
+        
+        <div class="ai-item">
+            <span class="ai-name">Perplexity</span>
+            <button class="vote-btn" onclick="addVote(this)">
+                👍 투표 <span class="vote-count">0</span>
+            </button>
+            <a href="#" class="link-btn">바로가기</a>
+        </div>
 
-  <div class="tool" data-name="chatgpt">
-    <span class="name">ChatGPT</span>
-    <button onclick="vote('chatgpt')">👍 투표 <span id="chatgpt">0</span></button>
-    <a href="https://chat.openai.com" target="_blank">바로가기</a>
-  </div>
+        <div class="ai-item">
+            <span class="ai-name">Grammarly</span>
+            <button class="vote-btn" onclick="addVote(this)">
+                👍 투표 <span class="vote-count">0</span>
+            </button>
+            <a href="#" class="link-btn">바로가기</a>
+        </div>
 
-  <div class="tool" data-name="perplexity">
-    <span class="name">Perplexity</span>
-    <button onclick="vote('perplexity')">👍 투표 <span id="perplexity">0</span></button>
-    <a href="https://www.perplexity.ai" target="_blank">바로가기</a>
-  </div>
-
-  <div class="tool" data-name="grammarly">
-    <span class="name">Grammarly</span>
-    <button onclick="vote('grammarly')">👍 투표 <span id="grammarly">0</span></button>
-    <a href="https://www.grammarly.com" target="_blank">바로가기</a>
-  </div>
-
-  <div class="tool" data-name="notion">
-    <span class="name">Notion AI</span>
-    <button onclick="vote('notion')">👍 투표 <span id="notion">0</span></button>
-    <a href="https://www.notion.so" target="_blank">바로가기</a>
-  </div>
-
+        <div class="ai-item">
+            <span class="ai-name">Notion AI</span>
+            <button class="vote-btn" onclick="addVote(this)">
+                👍 투표 <span class="vote-count">0</span>
+            </button>
+            <a href="#" class="link-btn">바로가기</a>
+        </div>
+    </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+    // 투표 버튼 클릭 시 숫자를 1씩 증가시키는 함수
+    function addVote(button) {
+        const countSpan = button.querySelector('.vote-count');
+        let currentCount = parseInt(countSpan.innerText);
+        countSpan.innerText = currentCount + 1;
+    }
+</script>
 
 </body>
 </html>
