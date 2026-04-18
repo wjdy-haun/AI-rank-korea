@@ -1,62 +1,45 @@
-let votes = {
-  chatgpt: 0,
-  perplexity: 0,
-  grammarly: 0,
-  notion: 0
-};
-
-// 페이지 로드 시 저장값 불러오기
-window.addEventListener("DOMContentLoaded", () => {
-  const saved = localStorage.getItem("votes");
-
-  if (saved) {
-    votes = JSON.parse(saved);
-  }
-
-  updateUI();
-});
-
-function vote(name) {
-  if (!votes[name]) {
-    votes[name] = 0;
-  }
-
-  votes[name] += 1;
-
-  localStorage.setItem("votes", JSON.stringify(votes));
-
-  updateUI();
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #eef2ff, #f5f5f5);
+  padding: 20px;
 }
 
-function updateUI() {
-  // 숫자 업데이트
-  document.getElementById("chatgpt").innerText = votes.chatgpt || 0;
-  document.getElementById("perplexity").innerText = votes.perplexity || 0;
-  document.getElementById("grammarly").innerText = votes.grammarly || 0;
-  document.getElementById("notion").innerText = votes.notion || 0;
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  // 1위 찾기
-  const sorted = Object.entries(votes).sort((a, b) => b[1] - a[1]);
-  const top = sorted[0][0];
+section {
+  background: white;
+  padding: 15px;
+  margin: 12px auto;
+  max-width: 500px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
 
-  // 모든 박스 초기화
-  document.querySelectorAll(".tool").forEach(el => {
-    el.style.border = "none";
-    el.style.transform = "scale(1)";
-  });
+.tool {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  // 1위 강조
-  const tools = document.querySelectorAll(".tool");
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #4CAF50;
+  color: white;
+  transition: 0.2s;
+}
 
-  const map = {
-    chatgpt: tools[0],
-    perplexity: tools[1],
-    grammarly: tools[2],
-    notion: tools[3]
-  };
+button:hover {
+  transform: scale(1.05);
+}
 
-  if (map[top]) {
-    map[top].style.border = "2px solid gold";
-    map[top].style.transform = "scale(1.05)";
-  }
+span {
+  margin-left: 10px;
+  font-weight: bold;
 }
