@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Rank Korea</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+<h1>AI Rank Korea</h1>
+<p>학생들이 투표하는 공부용 AI 순위 사이트</p>
+</header>
+
+<section>
+<h2>숙제 도움</h2>
+<div class="tool">
+<span>ChatGPT</span>
+<button onclick="vote('chatgpt')">👍 투표 (<span id="chatgpt">0</span>)</button>
+</div>
+</section>
+
+<section>
+<h2>수학 풀이</h2>
+<div class="tool">
+<span>Perplexity</span>
+<button onclick="vote('perplexity')">👍 투표 (<span id="perplexity">0</span>)</button>
+</div>
+</section>
+
+<section>
+<h2>글쓰기</h2>
+<div class="tool">
+<span>Grammarly</span>
+<button onclick="vote('grammarly')">👍 투표 (<span id="grammarly">0</span>)</button>
+</div>
+</section>
+
+<section>
+<h2>노트 정리</h2>
+<div class="tool">
+<span>Notion AI</span>
+<button onclick="vote('notion')">👍 투표 (<span id="notion">0</span>)</button>
+</div>
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
