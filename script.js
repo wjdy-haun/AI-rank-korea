@@ -1,42 +1,47 @@
 body {
   font-family: Arial;
   background: linear-gradient(135deg, #eef2ff, #f5f5f5);
+  text-align: center;
+  margin: 0;
   padding: 20px;
 }
 
-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-section {
-  background: white;
-  padding: 15px;
-  margin: 12px auto;
-  max-width: 500px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+#list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .tool {
+  width: 90%;
+  max-width: 600px;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  transition: 0.3s;
+}
+
+.name {
+  font-weight: bold;
 }
 
 button {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
   background: #4CAF50;
   color: white;
+  cursor: pointer;
 }
 
-button:hover {
-  transform: scale(1.05);
-}
-
-span {
-  font-weight: bold;
+a {
+  text-decoration: none;
+  color: #333;
 }
