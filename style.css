@@ -7,71 +7,46 @@ let votes = {
 
 window.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("votes");
-
-  if (saved) {
-    votes = JSON.parse(saved);
-  }
-
+  if (saved) votes = JSON.parse(saved);
   render();
 });
 
 function vote(name) {
   votes[name] = (votes[name] || 0) + 1;
-
   localStorage.setItem("votes", JSON.stringify(votes));
-
   render();
 }
 
 function render() {
-  // 숫자 업데이트
-  document.getElementById("chatgpt").innerText = votes.chatgpt;
-  document.getElementById("perplexity").innerText = votes.perplexity;
-  document.getElementById("grammarly").innerText = votes.grammarly;
-  document.getElementById("notion").innerText = votes.notion;
+  const list = document.getElementById("list");
+  const tools = Array.from(document.querySelectorAll(".tool"));
 
-  // 1위 찾기
-  const sorted = Object.entries(votes).sort((a, b) => b[1] - a[1]);
-
-  const tools = document.querySelectorAll(".tool");
-
-  const map = {
-    chatgpt: tools[0],
-    perplexity: tools[1],
-    grammarly: tools[2],
-    notion: tools[3]
-  };
-
-  // 초기화
-  tools.forEach(t => {
-    t.style.border = "none";
-    t.style.transform = "scale(1)";
+  // 정렬
+  const sorted = tools.sort((a, b) => {
+    const aName = a.dataset.name;
+    const bName = b.dataset.name;
+    return (votes[bName] || 0) - (votes[aName] || 0);
   });
 
-  // 메달
-  const medals = ["🥇", "🥈", "🥉", ""];
+  // 다시 붙이기
+  sorted.forEach((el, index) => {
+    const name = el.dataset.name;
 
-  sorted.forEach((item, index) => {
-    const name = item[0];
-    const el = map[name];
+    // 숫자 업데이트
+    document.getElementById(name).innerText = votes[name] || 0;
 
-    if (!el) return;
+    // 초기화
+    el.style.border = "none";
 
-    const label = el.querySelector("span");
-
-    if (!label.dataset.base) {
-      label.dataset.base = label.innerText;
-    }
-
-    label.innerText = medals[index] + " " + label.dataset.base;
-
+    // 메달 색
     if (index === 0) {
       el.style.border = "2px solid gold";
-      el.style.transform = "scale(1.08)";
     } else if (index === 1) {
       el.style.border = "2px solid silver";
     } else if (index === 2) {
       el.style.border = "2px solid #cd7f32";
     }
+
+    list.appendChild(el);
   });
 }
