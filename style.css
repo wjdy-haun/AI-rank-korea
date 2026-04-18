@@ -7,36 +7,40 @@ let votes = {
 
 window.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("votes");
+
   if (saved) {
     votes = JSON.parse(saved);
   }
+
   render();
 });
 
 function vote(name) {
   votes[name] = (votes[name] || 0) + 1;
+
   localStorage.setItem("votes", JSON.stringify(votes));
+
   render();
 }
 
 function render() {
   // 숫자 업데이트
-  for (let key in votes) {
-    const el = document.getElementById(key);
-    if (el) el.innerText = votes[key];
-  }
+  document.getElementById("chatgpt").innerText = votes.chatgpt;
+  document.getElementById("perplexity").innerText = votes.perplexity;
+  document.getElementById("grammarly").innerText = votes.grammarly;
+  document.getElementById("notion").innerText = votes.notion;
 
   // 1위 찾기
   const sorted = Object.entries(votes).sort((a, b) => b[1] - a[1]);
   const top = sorted[0][0];
 
-  // 모든 섹션 초기화
-  document.querySelectorAll(".tool").forEach(el => {
-    el.style.border = "none";
-    el.style.transform = "scale(1)";
-  });
-
+  // 초기화
   const tools = document.querySelectorAll(".tool");
+
+  tools.forEach(t => {
+    t.style.border = "none";
+    t.style.transform = "scale(1)";
+  });
 
   const map = {
     chatgpt: tools[0],
@@ -45,12 +49,13 @@ function render() {
     notion: tools[3]
   };
 
+  // 1위 강조
   if (map[top]) {
     map[top].style.border = "2px solid gold";
     map[top].style.transform = "scale(1.08)";
 
-    // 왕관 표시
     const name = map[top].querySelector("span");
+
     if (!name.innerText.includes("👑")) {
       name.innerText = "👑 " + name.innerText;
     }
