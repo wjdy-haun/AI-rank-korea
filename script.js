@@ -1,47 +1,52 @@
-body {
-  font-family: Arial;
-  background: linear-gradient(135deg, #eef2ff, #f5f5f5);
-  text-align: center;
-  margin: 0;
-  padding: 20px;
+let votes = {
+  chatgpt: 0,
+  perplexity: 0,
+  grammarly: 0,
+  notion: 0
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("votes");
+  if (saved) votes = JSON.parse(saved);
+  render();
+});
+
+function vote(name) {
+  votes[name] = (votes[name] || 0) + 1;
+  localStorage.setItem("votes", JSON.stringify(votes));
+  render();
 }
 
-#list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
+function render() {
+  const list = document.getElementById("list");
+  const tools = Array.from(document.querySelectorAll(".tool"));
 
-.tool {
-  width: 90%;
-  max-width: 600px;
-  background: white;
-  padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  // 정렬
+  const sorted = tools.sort((a, b) => {
+    const aName = a.dataset.name;
+    const bName = b.dataset.name;
+    return (votes[bName] || 0) - (votes[aName] || 0);
+  });
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  // 다시 붙이기
+  sorted.forEach((el, index) => {
+    const name = el.dataset.name;
 
-  transition: 0.3s;
-}
+    // 숫자 업데이트
+    document.getElementById(name).innerText = votes[name] || 0;
 
-.name {
-  font-weight: bold;
-}
+    // 초기화
+    el.style.border = "none";
 
-button {
-  padding: 6px 10px;
-  border: none;
-  border-radius: 8px;
-  background: #4CAF50;
-  color: white;
-  cursor: pointer;
-}
+    // 메달 색
+    if (index === 0) {
+      el.style.border = "2px solid gold";
+    } else if (index === 1) {
+      el.style.border = "2px solid silver";
+    } else if (index === 2) {
+      el.style.border = "2px solid #cd7f32";
+    }
 
-a {
-  text-decoration: none;
-  color: #333;
+    list.appendChild(el);
+  });
 }
